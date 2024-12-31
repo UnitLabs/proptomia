@@ -41,7 +41,7 @@ hook.Add("InitPostEntity", "proptomia_buddies", function()
                 local v = buddies[i]
                 local phys, tool, prop = v.physgun == 1, v.toolgun == 1, v.properties == 1
 
-                net.WriteString(v.steamid)
+                net.WriteString(v.steamid or "nil")
                 net.WriteBool(phys)
                 net.WriteBool(tool)
                 net.WriteBool(prop)
