@@ -23,35 +23,50 @@ local function concat(...)
 
     return str .. "\n"
 end
+
 local color_gray, color_wblue, color_blue, color_yellow, color_red =
     Color(175, 175, 175), Color(150, 150, 255), Color(100, 100, 255), Color(255, 150, 100), Color(255, 100, 100)
+
+local logger = signalLogger and signalLogger.Register("proptomia", { color_wblue, "Proptomia" }) or nil
+
 function proptomia.LogInfo(...)
     local s = concat(...)
 
-    MsgC(color_wblue, "Proptomia ", color_gray, "[", color_blue, " INFO  ", color_gray, "]\t", color_white, s)
-    if signalLogger then signalLogger.Info("proptomia", s) end -- support for my logger :p
+    if logger then
+        logger:Info(s)
+    else
+        MsgC(color_wblue, "Proptomia ", color_gray, "[", color_blue, " INFO  ", color_gray, "]\t", color_white, s)
+    end
 end
 function proptomia.LogWarn(...)
     local s = concat(...)
 
-    MsgC(color_wblue, "Proptomia ", color_gray, "[", color_yellow, " WARN  ", color_gray, "]\t", color_white, s)
-    if signalLogger then signalLogger.Warn("proptomia", s) end
+    if logger then
+        logger:Warn(s)
+    else
+        MsgC(color_wblue, "Proptomia ", color_gray, "[", color_yellow, " WARN  ", color_gray, "]\t", color_white, s)
+    end
 end
 function proptomia.LogError(...)
     local s = concat(...)
 
-    MsgC(color_wblue, "Proptomia ", color_gray, "[", color_red, " ERROR ", color_gray, "]\t", color_white, s)
+    if logger then
+        logger:Error(s)
+    else
+        MsgC(color_wblue, "Proptomia ", color_gray, "[", color_red, " ERROR ", color_gray, "]\t", color_white, s)
+    end
     debug.Trace()
-
-    if signalLogger then signalLogger.Error("proptomia", s) end
 end
 function proptomia.LogDebug(...)
     local s = concat(...)
 
-    if proptomia.debug then
-        MsgC(color_wblue, "Proptomia ", color_gray, "[", color_wblue, " DEBUG ", color_gray, "]\t", color_white, s)
+    if logger then
+        logger:Debug(s)
+    else
+        if proptomia.debug then
+            MsgC(color_wblue, "Proptomia ", color_gray, "[", color_wblue, " DEBUG ", color_gray, "]\t", color_white, s)
+        end
     end
-    if signalLogger then signalLogger.Debug("proptomia", s) end
 end
 
 proptomia.LogInfo("Loading files...")
