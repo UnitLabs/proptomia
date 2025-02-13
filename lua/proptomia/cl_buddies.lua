@@ -35,19 +35,24 @@ hook.Add("InitPostEntity", "proptomia_buddies", function()
     local steamid = LocalPlayer():SteamID()
     local buddies = sql.Query("SELECT * FROM proptomia_buddies")
 
-    -- check if table ok
+    if not buddies then return end
+
+    -- check if the buddies table is ok
+    -- im gonna explode, if it will delete good rows (it would be epic fail)
     for k, row in next, buddies do
-        if not row.steamid and row.name then
+        if row.steamid then continue end
+
+        if row.name then
             proptomia.LogError("Buddies has damaged row, removing it -> ", k, row.name)
             sql.Query(remove_by_name_query:format(row.name))
             table.remove(buddies, k)
-        elseif not row.steamid and not row.name then
+        else
             proptomia.LogError("Buddies has damaged row -> ", k)
             table.remove(buddies, k)
         end
     end
 
-    if buddies and not table.IsEmpty(buddies) then
+    if not table.IsEmpty(buddies) then
         net.Start("proptomia_buddies")
             net.WriteUInt(0, 2)
 
