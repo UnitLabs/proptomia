@@ -39,7 +39,7 @@ function MetaEntity:CPPISetOwner(ply)
     -- NOONE SAID IF PLAYER PARAM IS NOT REQUIRED,
     -- NOONE SAID IF IT IS ALLOWED TO PUT NULL HERE
     -- GOOD JOB, ULX "DEVELOPERS"
-    if not IsValid(self) then
+    if not IsValid(ply) then
         return proptomia.SetOwnerWorld(self)
     else
         return proptomia.SetOwner(self, ply)
