@@ -31,7 +31,19 @@ function MetaEntity:CPPIGetOwner()
     end
 end
 function MetaEntity:CPPISetOwner(ply)
-    return proptomia.SetOwner(self, ply)
+    -- yes i KNOW this is INSANE
+    -- but NOONE actually DOCUMENTED this
+    -- https://ulyssesmod.net/archive/CPPI_v1-1.pdf
+    -- and BECAUSE OF FALCO IT IS COMMON TO PUT NULL HERE
+    -- CPPI HAS **NOTHING** TO REMOVE OWNERS, NOTHING MENTIONED,
+    -- NOONE SAID IF PLAYER PARAM IS NOT REQUIRED,
+    -- NOONE SAID IF IT IS ALLOWED TO PUT NULL HERE
+    -- GOOD JOB, ULX "DEVELOPERS"
+    if not IsValid(self) then
+        return proptomia.SetOwnerWorld(self)
+    else
+        return proptomia.SetOwner(self, ply)
+    end
 end
 function MetaEntity:CPPICanPhysgun(ply)
     if not proptomia.convars.protection:GetBool() then
