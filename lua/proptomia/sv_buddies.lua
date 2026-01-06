@@ -48,7 +48,7 @@ local actions = {
         else
             proptomia.buddies[steamid][sid] = {phys, tool, prop}
         end
-        
+
         local ply = proptomia.GetPlayerBySteamID(sid)
         if IsValid(ply) then
             net.Start("proptomia_buddies")
@@ -65,7 +65,7 @@ local actions = {
     end,
     [2] = function(_, steamid) -- removing buddy
         local sid = net.ReadString()
-        
+
         if proptomia.buddies[steamid] then
             local ply = proptomia.GetPlayerBySteamID(sid)
             if IsValid(ply) then

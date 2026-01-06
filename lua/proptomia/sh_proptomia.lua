@@ -14,7 +14,11 @@ local function concat(...)
             if v:IsPlayer() then
                 str = str .. v:Name(true) .. "[" .. v:SteamID() .. "] "
             else
-                str = str .. "[" .. v:EntIndex() .. "]" .. "[" .. v:GetClass() .. "]"
+                if not IsValid(v) then
+                    str = str .. "[-1]" .. "[NULL]"
+                else
+                    str = str .. "[" .. v:EntIndex() .. "]" .. "[" .. v:GetClass() .. "]"
+                end
             end
         else
             str = str .. tostring(v) .. " "

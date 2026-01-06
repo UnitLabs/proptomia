@@ -1,4 +1,6 @@
 local _cppi = CPPI
+-- future reference: https://ulyssesmod.net/archive/CPPI_v1-3.pdf
+-- somehow i got the link
 
 if _cppi and _cppi.GetName() ~= "Proptomia" then
     proptomia.Warn("Detected different prop protection addon!\n\tPlease remove it to prevent conflicts")
@@ -31,14 +33,6 @@ function MetaEntity:CPPIGetOwner()
     end
 end
 function MetaEntity:CPPISetOwner(ply)
-    -- yes i KNOW this is INSANE
-    -- but NOONE actually DOCUMENTED this
-    -- https://ulyssesmod.net/archive/CPPI_v1-1.pdf
-    -- and BECAUSE OF FALCO IT IS COMMON TO PUT NULL HERE
-    -- CPPI HAS **NOTHING** TO REMOVE OWNERS, NOTHING MENTIONED,
-    -- NOONE SAID IF PLAYER PARAM IS NOT REQUIRED,
-    -- NOONE SAID IF IT IS ALLOWED TO PUT NULL HERE
-    -- GOOD JOB, ULX "DEVELOPERS"
     if not IsValid(ply) then
         return proptomia.SetOwnerWorld(self)
     else
